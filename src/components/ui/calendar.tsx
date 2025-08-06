@@ -3,33 +3,23 @@
 import * as React from "react";
 import {
   DayPicker,
-  type DayPickerSingleProps,
-  type DayPickerRangeProps,
-  type DayPickerMultipleProps,
+  type DayPickerProps,
 } from "react-day-picker";
 
 import { cn } from "./utils";
 import { buttonVariants } from "./button";
 
-// Tambahkan dukungan className dari elemen HTML biasa
-type BaseProps = React.HTMLAttributes<HTMLDivElement>;
-
-type CalendarProps = BaseProps &
-  (
-    | (DayPickerSingleProps & { mode: "single" })
-    | (DayPickerRangeProps & { mode: "range" })
-    | (DayPickerMultipleProps & { mode: "multiple" })
-  );
+interface CalendarProps extends DayPickerProps {
+  className?: string;
+}
 
 export function Calendar({
   className,
-  mode,
   ...props
 }: CalendarProps) {
   return (
     <DayPicker
-      mode={mode}
-      showOutsideDays={true}
+      showOutsideDays
       className={cn("p-3", className)}
       classNames={{
         months: "flex flex-col sm:flex-row gap-2",
@@ -51,7 +41,7 @@ export function Calendar({
         cell: cn(
           "relative p-0 text-center text-sm focus-within:relative focus-within:z-20",
           "[&:has([aria-selected])]:bg-accent",
-          mode === "range"
+          props.mode === "range"
             ? "[&:has(>.day-range-start)]:rounded-l-md [&:has(>.day-range-end)]:rounded-r-md"
             : "[&:has([aria-selected])]:rounded-md"
         ),
