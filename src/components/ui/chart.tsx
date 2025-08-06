@@ -13,7 +13,7 @@ import type {
 import type {
   ValueType,
   NameType,
-  Payload,
+  Payload as RechartsPayload,
 } from "recharts/types/component/DefaultTooltipContent";
 import { cn } from "./utils";
 
@@ -33,8 +33,16 @@ type ChartContextProps = {
   config: ChartConfig;
 };
 
-type CustomTooltipProps = Omit<RechartsTooltipProps<ValueType, NameType>, "payload" | "label"> & {
-  payload?: Payload<ValueType, NameType>[];
+type ExtendedPayload = RechartsPayload<ValueType, NameType> & {
+  payload?: { [key: string]: any };
+  color?: string;
+};
+
+type CustomTooltipProps = Omit<
+  RechartsTooltipProps<ValueType, NameType>,
+  "payload" | "label"
+> & {
+  payload?: ExtendedPayload[];
   label?: string | number;
   className?: string;
   indicator?: "line" | "dot" | "dashed";
@@ -230,7 +238,7 @@ function ChartLegendContent({
 
 function getPayloadConfigFromPayload(
   config: ChartConfig,
-  payload: Payload<ValueType, NameType>,
+  payload: ExtendedPayload,
   key: string
 ) {
   const payloadPayload =
@@ -240,8 +248,8 @@ function getPayloadConfigFromPayload(
 
   let configLabelKey = key;
 
-  if (key in payload && typeof payload[key as keyof typeof payload] === "string") {
-    configLabelKey = payload[key as keyof typeof payload] as string;
+  if (typeof (payload as any)[key] === "string") {
+    configLabelKey = (payload as any)[key];
   } else if (payloadPayload && typeof payloadPayload[key] === "string") {
     configLabelKey = payloadPayload[key];
   }
