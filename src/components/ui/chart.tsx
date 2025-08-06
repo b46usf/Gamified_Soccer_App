@@ -1,16 +1,14 @@
 "use client";
 
 import * as React from "react";
-import * as RechartsPrimitive from "recharts";
-import type {
-  TooltipProps,
-  LegendProps,
+import {
+  ResponsiveContainer,
+  Tooltip as RechartsTooltip,
+  Legend as RechartsLegend,
+  TooltipProps as RechartsTooltipProps,
+  LegendProps as RechartsLegendProps,
 } from "recharts";
-import type {
-  ValueType,
-  NameType,
-} from "recharts/types/component/DefaultTooltipContent";
-
+import type { ValueType, NameType } from "recharts/types/component/DefaultTooltipContent";
 import { cn } from "./utils";
 
 const THEMES = { light: "", dark: ".dark" } as const;
@@ -29,7 +27,9 @@ type ChartContextProps = {
   config: ChartConfig;
 };
 
-type CustomTooltipProps = TooltipProps<ValueType, NameType> & {
+type CustomTooltipProps = Omit<RechartsTooltipProps<ValueType, NameType>, "payload" | "label"> & {
+  payload?: any[];
+  label?: string | number;
   className?: string;
   indicator?: "line" | "dot" | "dashed";
   hideLabel?: boolean;
@@ -43,8 +43,8 @@ type CustomTooltipProps = TooltipProps<ValueType, NameType> & {
 type CustomLegendProps = {
   className?: string;
   hideIcon?: boolean;
-  payload?: LegendProps["payload"];
-  verticalAlign?: LegendProps["verticalAlign"];
+  payload?: RechartsLegendProps["payload"];
+  verticalAlign?: RechartsLegendProps["verticalAlign"];
   nameKey?: string;
 };
 
@@ -66,9 +66,7 @@ function ChartContainer({
   ...props
 }: React.ComponentProps<"div"> & {
   config: ChartConfig;
-  children: React.ComponentProps<
-    typeof RechartsPrimitive.ResponsiveContainer
-  >["children"];
+  children: React.ComponentProps<typeof ResponsiveContainer>["children"];
 }) {
   const uniqueId = React.useId();
   const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`;
@@ -82,9 +80,7 @@ function ChartContainer({
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
-        <RechartsPrimitive.ResponsiveContainer>
-          {children}
-        </RechartsPrimitive.ResponsiveContainer>
+        <ResponsiveContainer>{children}</ResponsiveContainer>
       </div>
     </ChartContext.Provider>
   );
@@ -92,7 +88,7 @@ function ChartContainer({
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
-    ([, config]) => config.theme || config.color,
+    ([, config]) => config.theme || config.color
   );
 
   if (!colorConfig.length) return null;
@@ -121,7 +117,7 @@ ${colorConfig
   );
 };
 
-const ChartTooltip = RechartsPrimitive.Tooltip;
+const ChartTooltip = RechartsTooltip;
 
 function ChartTooltipContent({
   active,
@@ -185,7 +181,7 @@ function ChartTooltipContent({
   );
 }
 
-const ChartLegend = RechartsPrimitive.Legend;
+const ChartLegend = RechartsLegend;
 
 function ChartLegendContent({
   className,
@@ -203,7 +199,7 @@ function ChartLegendContent({
       className={cn(
         "flex items-center justify-center gap-4",
         verticalAlign === "top" ? "pb-3" : "pt-3",
-        className,
+        className
       )}
     >
       {payload.map((item: any, index: number) => {
@@ -229,7 +225,7 @@ function ChartLegendContent({
 function getPayloadConfigFromPayload(
   config: ChartConfig,
   payload: any,
-  key: string,
+  key: string
 ) {
   const payloadPayload =
     payload?.payload && typeof payload.payload === "object"

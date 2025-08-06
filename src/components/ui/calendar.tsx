@@ -11,10 +11,15 @@ import {
 import { cn } from "./utils";
 import { buttonVariants } from "./button";
 
-type CalendarProps =
-  | (DayPickerSingleProps & { mode: "single" })
-  | (DayPickerRangeProps & { mode: "range" })
-  | (DayPickerMultipleProps & { mode: "multiple" });
+// Tambahkan dukungan className dari elemen HTML biasa
+type BaseProps = React.HTMLAttributes<HTMLDivElement>;
+
+type CalendarProps = BaseProps &
+  (
+    | (DayPickerSingleProps & { mode: "single" })
+    | (DayPickerRangeProps & { mode: "range" })
+    | (DayPickerMultipleProps & { mode: "multiple" })
+  );
 
 export function Calendar({
   className,
