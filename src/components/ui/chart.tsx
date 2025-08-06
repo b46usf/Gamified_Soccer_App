@@ -5,11 +5,17 @@ import {
   ResponsiveContainer,
   Tooltip as RechartsTooltip,
   Legend as RechartsLegend,
+} from "recharts";
+import type {
   TooltipProps as RechartsTooltipProps,
   LegendProps as RechartsLegendProps,
 } from "recharts";
-import type { ValueType, NameType } from "recharts/types/component/DefaultTooltipContent";
+import type {
+  ValueType,
+  NameType,
+} from "recharts/types/component/DefaultTooltipContent";
 import { cn } from "./utils";
+
 
 const THEMES = { light: "", dark: ".dark" } as const;
 
