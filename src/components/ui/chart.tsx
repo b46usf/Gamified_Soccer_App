@@ -29,6 +29,25 @@ type ChartContextProps = {
   config: ChartConfig;
 };
 
+type CustomTooltipProps = TooltipProps<ValueType, NameType> & {
+  className?: string;
+  indicator?: "line" | "dot" | "dashed";
+  hideLabel?: boolean;
+  hideIndicator?: boolean;
+  nameKey?: string;
+  labelKey?: string;
+  labelClassName?: string;
+  color?: string;
+};
+
+type CustomLegendProps = {
+  className?: string;
+  hideIcon?: boolean;
+  payload?: LegendProps["payload"];
+  verticalAlign?: LegendProps["verticalAlign"];
+  nameKey?: string;
+};
+
 const ChartContext = React.createContext<ChartContextProps | null>(null);
 
 function useChart() {
@@ -114,18 +133,10 @@ function ChartTooltipContent({
   label,
   labelFormatter,
   labelClassName,
-  formatter,
   color,
   nameKey,
   labelKey,
-}: TooltipProps<ValueType, NameType> &
-  React.ComponentProps<"div"> & {
-    hideLabel?: boolean;
-    hideIndicator?: boolean;
-    indicator?: "line" | "dot" | "dashed";
-    nameKey?: string;
-    labelKey?: string;
-  }) {
+}: CustomTooltipProps) {
   const { config } = useChart();
 
   const tooltipLabel = React.useMemo(() => {
@@ -182,11 +193,7 @@ function ChartLegendContent({
   payload = [],
   verticalAlign = "bottom",
   nameKey,
-}: React.ComponentProps<"div"> &
-  Pick<LegendProps, "payload" | "verticalAlign"> & {
-    hideIcon?: boolean;
-    nameKey?: string;
-  }) {
+}: CustomLegendProps) {
   const { config } = useChart();
 
   if (!Array.isArray(payload) || !payload.length) return null;

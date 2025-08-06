@@ -1,28 +1,30 @@
 "use client";
 
-// import * as React from "react";
-import { DayPicker, type DayPickerSingleProps, type DayPickerRangeProps, type DayPickerMultipleProps } from "react-day-picker";
+import * as React from "react";
+import {
+  DayPicker,
+  type DayPickerSingleProps,
+  type DayPickerRangeProps,
+  type DayPickerMultipleProps,
+} from "react-day-picker";
+
 import { cn } from "./utils";
 import { buttonVariants } from "./button";
 
-type CalendarProps = (
-  | DayPickerSingleProps
-  | DayPickerRangeProps
-  | DayPickerMultipleProps
-) & {
-  className?: string;
-  classNames?: Partial<DayPickerSingleProps["classNames"]>;
-};
+type CalendarProps =
+  | (DayPickerSingleProps & { mode: "single" })
+  | (DayPickerRangeProps & { mode: "range" })
+  | (DayPickerMultipleProps & { mode: "multiple" });
 
 export function Calendar({
   className,
-  classNames,
-  showOutsideDays = true,
+  mode,
   ...props
 }: CalendarProps) {
   return (
     <DayPicker
-      showOutsideDays={showOutsideDays}
+      mode={mode}
+      showOutsideDays={true}
       className={cn("p-3", className)}
       classNames={{
         months: "flex flex-col sm:flex-row gap-2",
@@ -44,7 +46,7 @@ export function Calendar({
         cell: cn(
           "relative p-0 text-center text-sm focus-within:relative focus-within:z-20",
           "[&:has([aria-selected])]:bg-accent",
-          (props as any).mode === "range"
+          mode === "range"
             ? "[&:has(>.day-range-start)]:rounded-l-md [&:has(>.day-range-end)]:rounded-r-md"
             : "[&:has([aria-selected])]:rounded-md"
         ),
@@ -65,7 +67,6 @@ export function Calendar({
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
-        ...classNames,
       }}
       {...props}
     />
