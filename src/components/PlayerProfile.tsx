@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Progress } from "./ui/progress";
-import { Trophy, Target, Zap, Star, Award, ArrowLeft } from "lucide-react";
+import { Trophy, Award, ArrowLeft } from "lucide-react";
 
 interface Achievement {
   id: string;

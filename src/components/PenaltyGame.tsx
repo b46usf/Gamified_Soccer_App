@@ -507,7 +507,7 @@ export function PenaltyGame({ onBack }: { onBack: () => void }) {
                   {gameActive && penaltyState.isPlayerTurn && penaltyState.gamePhase === 'selecting' && penaltyState.targetPosition && countdown === 0 && (
                     <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
                       <Button 
-                        onClick={handleShoot}
+                        onClick={() => handleShoot()}
                         size="lg"
                         className="bg-red-600 hover:bg-red-700 animate-pulse"
                         disabled={isKicking}
