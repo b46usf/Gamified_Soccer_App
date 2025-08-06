@@ -167,10 +167,15 @@ function ChartTooltipContent({
     <div className={cn("border bg-white p-2 rounded text-xs shadow", className)}>
       {!nestLabel ? tooltipLabel : null}
       <div className="grid gap-1.5">
-        {payload.map((item: Payload<ValueType, NameType>, index) => {
+        {payload.map((item, index) => {
           const key = `${nameKey || item.name || item.dataKey || "value"}`;
           const itemConfig = getPayloadConfigFromPayload(config, item, key);
-          const indicatorColor = color || item.payload?.fill || item.color;
+          const indicatorColor =
+            color ||
+            (typeof item.payload === "object" &&
+              "fill" in item.payload &&
+              (item.payload as any).fill) ||
+            item.color;
 
           return (
             <div key={index} className="flex items-center gap-2">
