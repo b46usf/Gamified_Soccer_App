@@ -13,7 +13,7 @@ import type {
 import type {
   ValueType,
   NameType,
-  Payload as RechartsPayload,
+  Payload,
 } from "recharts/types/component/DefaultTooltipContent";
 import { cn } from "./utils";
 
@@ -33,16 +33,11 @@ type ChartContextProps = {
   config: ChartConfig;
 };
 
-type ExtendedPayload = RechartsPayload<ValueType, NameType> & {
-  payload?: { [key: string]: any };
-  color?: string;
-};
-
 type CustomTooltipProps = Omit<
   RechartsTooltipProps<ValueType, NameType>,
   "payload" | "label"
 > & {
-  payload?: ExtendedPayload[];
+  payload?: Payload<ValueType, NameType>[];
   label?: string | number;
   className?: string;
   indicator?: "line" | "dot" | "dashed";
@@ -172,7 +167,7 @@ function ChartTooltipContent({
     <div className={cn("border bg-white p-2 rounded text-xs shadow", className)}>
       {!nestLabel ? tooltipLabel : null}
       <div className="grid gap-1.5">
-        {payload.map((item, index) => {
+        {payload.map((item: Payload<ValueType, NameType>, index) => {
           const key = `${nameKey || item.name || item.dataKey || "value"}`;
           const itemConfig = getPayloadConfigFromPayload(config, item, key);
           const indicatorColor = color || item.payload?.fill || item.color;
@@ -216,7 +211,7 @@ function ChartLegendContent({
         className
       )}
     >
-      {payload.map((item, index) => {
+      {payload.map((item: any, index: number) => {
         const key = `${nameKey || item.dataKey || "value"}`;
         const itemConfig = getPayloadConfigFromPayload(config, item, key);
 
@@ -238,7 +233,7 @@ function ChartLegendContent({
 
 function getPayloadConfigFromPayload(
   config: ChartConfig,
-  payload: ExtendedPayload,
+  payload: Payload<ValueType, NameType>,
   key: string
 ) {
   const payloadPayload =
@@ -248,8 +243,8 @@ function getPayloadConfigFromPayload(
 
   let configLabelKey = key;
 
-  if (typeof (payload as any)[key] === "string") {
-    configLabelKey = (payload as any)[key];
+  if (key in payload && typeof payload[key as keyof typeof payload] === "string") {
+    configLabelKey = payload[key as keyof typeof payload] as string;
   } else if (payloadPayload && typeof payloadPayload[key] === "string") {
     configLabelKey = payloadPayload[key];
   }
