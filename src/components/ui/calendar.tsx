@@ -1,13 +1,18 @@
 "use client";
 
-import * as React from "react";
-// import { ChevronLeft, ChevronRight } from "lucide-react";
-import { DayPicker } from "react-day-picker";
+// import * as React from "react";
+import { DayPicker, type DayPickerSingleProps, type DayPickerRangeProps, type DayPickerMultipleProps } from "react-day-picker";
+import { cn } from "./utils";
+import { buttonVariants } from "./button";
 
-import { cn } from "./utils"; // Pastikan util ini tersedia
-import { buttonVariants } from "./button"; // Pastikan buttonVariants sesuai
-
-interface CalendarProps extends React.ComponentProps<typeof DayPicker> {}
+type CalendarProps = (
+  | DayPickerSingleProps
+  | DayPickerRangeProps
+  | DayPickerMultipleProps
+) & {
+  className?: string;
+  classNames?: Partial<DayPickerSingleProps["classNames"]>;
+};
 
 export function Calendar({
   className,
@@ -39,7 +44,7 @@ export function Calendar({
         cell: cn(
           "relative p-0 text-center text-sm focus-within:relative focus-within:z-20",
           "[&:has([aria-selected])]:bg-accent",
-          props.mode === "range"
+          (props as any).mode === "range"
             ? "[&:has(>.day-range-start)]:rounded-l-md [&:has(>.day-range-end)]:rounded-r-md"
             : "[&:has([aria-selected])]:rounded-md"
         ),
@@ -60,16 +65,8 @@ export function Calendar({
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
-        ...classNames, // override jika ada custom
+        ...classNames,
       }}
-      /* components={{
-        IconLeft: ({ className, ...iconProps }) => (
-          <ChevronLeft className={cn("size-4", className)} {...iconProps} />
-        ),
-        IconRight: ({ className, ...iconProps }) => (
-          <ChevronRight className={cn("size-4", className)} {...iconProps} />
-        ),
-      }} */
       {...props}
     />
   );

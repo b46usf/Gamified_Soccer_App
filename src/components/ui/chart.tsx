@@ -151,7 +151,7 @@ function ChartTooltipContent({
     <div className={cn("border bg-white p-2 rounded text-xs shadow", className)}>
       {!nestLabel ? tooltipLabel : null}
       <div className="grid gap-1.5">
-        {payload.map((item, index) => {
+        {payload.map((item: any, index: number) => {
           const key = `${nameKey || item.name || item.dataKey || "value"}`;
           const itemConfig = getPayloadConfigFromPayload(config, item, key);
           const indicatorColor = color || (item.payload as any)?.fill || item.color;
@@ -189,7 +189,7 @@ function ChartLegendContent({
   }) {
   const { config } = useChart();
 
-  if (!payload?.length) return null;
+  if (!Array.isArray(payload) || !payload.length) return null;
 
   return (
     <div
@@ -199,7 +199,7 @@ function ChartLegendContent({
         className,
       )}
     >
-      {payload.map((item, index) => {
+      {payload.map((item: any, index: number) => {
         const key = `${nameKey || item.dataKey || "value"}`;
         const itemConfig = getPayloadConfigFromPayload(config, item, key);
 
