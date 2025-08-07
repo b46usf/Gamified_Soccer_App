@@ -1,7 +1,6 @@
-import tailwind from 'tailwindcss';
-import autoprefixer from 'autoprefixer';
+import tailwindcss from 'tailwindcss'
+import autoprefixer from 'autoprefixer'
 
-/** @type {import('postcss').ProcessOptions} */
 export default {
-  plugins: [tailwind, autoprefixer],
-};
+  plugins: [tailwindcss, autoprefixer],
+}
