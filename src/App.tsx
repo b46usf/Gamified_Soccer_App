@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { HomePage } from "./components/HomePage";
 import { AccuracyGame } from "./components/AccuracyGame";
 import { PowerGame } from "./components/PowerGame";
@@ -14,6 +14,7 @@ export default function App() {
   const [currentMode, setCurrentMode] = useState<GameMode>("home");
 
   const handleModeSelect = (mode: string) => {
+    console.log("[DEBUG] Mode selected by user:", mode);
     if (mode === "accuracy") {
       setCurrentMode("accuracy");
     } else if (mode === "power") {
@@ -26,6 +27,7 @@ export default function App() {
   };
 
   const renderCurrentMode = () => {
+    console.log("[DEBUG] Rendering mode:", currentMode);
     switch (currentMode) {
       case "home":
         return <HomePage onSelectMode={handleModeSelect} />;
@@ -44,15 +46,22 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    console.log("[DEBUG] Current game mode updated to:", currentMode);
+  }, [currentMode]);
+
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen bg-gray-50">
       {renderCurrentMode()}
-      
+
       {/* Floating Navigation */}
       {currentMode === "home" && (
         <div className="fixed bottom-6 right-6 flex gap-3">
           <Button
-            onClick={() => setCurrentMode("profile")}
+            onClick={() => {
+              console.log("[DEBUG] Navigating to profile mode");
+              setCurrentMode("profile");
+            }}
             size="lg"
             className="rounded-full shadow-lg"
             variant="secondary"
@@ -61,11 +70,14 @@ export default function App() {
           </Button>
         </div>
       )}
-      
+
       {currentMode !== "home" && (
         <div className="fixed bottom-6 right-6">
           <Button
-            onClick={() => setCurrentMode("home")}
+            onClick={() => {
+              console.log("[DEBUG] Navigating back to home");
+              setCurrentMode("home");
+            }}
             size="lg"
             className="rounded-full shadow-lg"
             variant="secondary"
