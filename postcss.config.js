@@ -1,4 +1,4 @@
-import tailwind from '@tailwindcss/postcss';
+import tailwind from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 
 /** @type {import('postcss').ProcessOptions} */
