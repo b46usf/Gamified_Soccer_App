@@ -1,18 +1,23 @@
 "use client";
 
-import * as React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { DayPicker } from "react-day-picker";
+import { DayPicker, DayPickerProps } from "react-day-picker";
 
 import { cn } from "./utils";
 import { buttonVariants } from "./button";
 
-function Calendar({
+// Tambahkan tipe khusus untuk komponen navigasi
+interface CalendarProps extends DayPickerProps {
+  className?: string;
+  classNames?: Partial<DayPickerProps["classNames"]>;
+}
+
+export function Calendar({
   className,
   classNames,
   showOutsideDays = true,
   ...props
-}: React.ComponentProps<typeof DayPicker>) {
+}: CalendarProps) {
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -59,20 +64,15 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
-      // Override icon nav dengan className untuk menambahkan ikon custom
       components={{
-        // @ts-expect-error -- ikutin API shadcn lama, ignore TypeScript
-        IconLeft: (propsIcon: any) => (
-          <ChevronLeft className={cn("size-4", propsIcon.className)} />
+        IconLeft: (iconProps) => (
+          <ChevronLeft className={cn("size-4", iconProps.className)} />
         ),
-        // @ts-expect-error
-        IconRight: (propsIcon: any) => (
-          <ChevronRight className={cn("size-4", propsIcon.className)} />
+        IconRight: (iconProps) => (
+          <ChevronRight className={cn("size-4", iconProps.className)} />
         ),
       }}
       {...props}
     />
   );
 }
-
-export { Calendar };
