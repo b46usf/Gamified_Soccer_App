@@ -1,61 +1,95 @@
-**Add your own guidelines here**
-<!--
+# 📖 Panduan Bermain – Gamified Soccer App
 
-System Guidelines
+Selamat datang di **Gamified Soccer App**!  
+Aplikasi ini menggabungkan keseruan sepak bola dengan sistem gamifikasi yang interaktif.  
+Panduan ini akan menjelaskan cara bermain dan fungsi dari setiap halaman dalam aplikasi.
 
-Use this file to provide the AI with rules and guidelines you want it to follow.
-This template outlines a few examples of things you can add. You can add your own sections and format it to suit your needs
+---
 
-TIP: More context isn't always better. It can confuse the LLM. Try and add the most important rules you need
+## 🏠 1. Halaman Beranda (Home)
+- Menampilkan ringkasan profil pemain: nama, avatar, level, dan poin.
+- Shortcut ke halaman utama lain (Pertandingan, Tantangan, Leaderboard, Profil).
+- Update terbaru atau pengumuman event akan muncul di bagian atas.
 
-# General guidelines
+**Tips:** Sering cek Home untuk melihat hadiah harian (Daily Rewards).
 
-Any general rules you want the AI to follow.
-For example:
+---
 
-* Only use absolute positioning when necessary. Opt for responsive and well structured layouts that use flexbox and grid by default
-* Refactor code as you go to keep code clean
-* Keep file sizes small and put helper functions and components in their own files.
+## 🎯 2. Halaman Tantangan (Challenges)
+- Berisi daftar misi harian & mingguan.
+- Setiap tantangan memiliki **poin hadiah** dan kadang **badge** khusus.
+- Status tantangan ditandai:
+  - ✅ Selesai
+  - 🔄 Sedang berjalan
+  - 🔒 Belum tersedia
 
---------------
+**Cara bermain:**
+1. Pilih tantangan dari daftar.
+2. Ikuti instruksi (misalnya: cetak 3 gol dalam 1 pertandingan).
+3. Setelah selesai, klaim hadiah.
 
-# Design system guidelines
-Rules for how the AI should make generations look like your company's design system
+---
 
-Additionally, if you select a design system to use in the prompt box, you can reference
-your design system's components, tokens, variables and components.
-For example:
+## ⚽ 3. Halaman Pertandingan (Matches)
+- Mode bermain utama untuk mengumpulkan poin dan meningkatkan level.
+- Pilih jenis pertandingan:
+  - **Single Match** – pertandingan cepat melawan AI.
+  - **Tournament** – rangkaian pertandingan dengan hadiah besar.
+  - **Practice Mode** – latihan tanpa memengaruhi poin.
 
-* Use a base font-size of 14px
-* Date formats should always be in the format “Jun 10”
-* The bottom toolbar should only ever have a maximum of 4 items
-* Never use the floating action button with the bottom toolbar
-* Chips should always come in sets of 3 or more
-* Don't use a dropdown if there are 2 or fewer options
+**Tips:** Gunakan Practice Mode untuk mencoba strategi baru tanpa kehilangan poin.
 
-You can also create sub sections and add more specific details
-For example:
+---
 
+## 🏆 4. Halaman Leaderboard
+- Menampilkan peringkat pemain secara global dan antar teman.
+- Filter berdasarkan:
+  - Harian
+  - Mingguan
+  - Sepanjang Waktu
+- Ikon medali akan muncul untuk 3 besar:
+  - 🥇 Emas
+  - 🥈 Perak
+  - 🥉 Perunggu
 
-## Button
-The Button component is a fundamental interactive element in our design system, designed to trigger actions or navigate
-users through the application. It provides visual feedback and clear affordances to enhance user experience.
+**Tips:** Selesaikan tantangan mingguan untuk naik peringkat lebih cepat.
 
-### Usage
-Buttons should be used for important actions that users need to take, such as form submissions, confirming choices,
-or initiating processes. They communicate interactivity and should have clear, action-oriented labels.
+---
 
-### Variants
-* Primary Button
-  * Purpose : Used for the main action in a section or page
-  * Visual Style : Bold, filled with the primary brand color
-  * Usage : One primary button per section to guide users toward the most important action
-* Secondary Button
-  * Purpose : Used for alternative or supporting actions
-  * Visual Style : Outlined with the primary color, transparent background
-  * Usage : Can appear alongside a primary button for less important actions
-* Tertiary Button
-  * Purpose : Used for the least important actions
-  * Visual Style : Text-only with no border, using primary color
-  * Usage : For actions that should be available but not emphasized
--->
+## 👤 5. Halaman Profil
+- Lihat statistik pribadi: jumlah pertandingan, gol, assist, win rate.
+- Ganti avatar dan nama tampilan.
+- Lihat koleksi badge dan pencapaian.
+
+**Tips:** Badge langka hanya bisa didapat dari event terbatas, jadi jangan sampai ketinggalan!
+
+---
+
+## 🎁 6. Halaman Hadiah & Toko (Rewards / Shop)
+- Tukarkan poin dengan item seperti:
+  - Kostum pemain
+  - Bola khusus
+  - Efek selebrasi gol
+- Beberapa item hanya tersedia dalam waktu terbatas.
+
+**Tips:** Simpan poin untuk membeli item spesial yang hanya muncul di event.
+
+---
+
+## 🔔 7. Notifikasi & Event
+- Notifikasi akan muncul untuk:
+  - Tantangan baru
+  - Hadiah harian
+  - Event spesial
+- Event biasanya memiliki tema dan aturan unik, misalnya “World Cup Mode”.
+
+---
+
+## 📜 8. Aturan Umum
+1. Bermain sportif, jangan gunakan cheat.
+2. Semua poin dan badge tersimpan otomatis di akun.
+3. Jika koneksi terputus saat pertandingan, skor terakhir yang tercatat akan digunakan.
+
+---
+
+> 💡 **Catatan:** Fitur dan tampilan aplikasi dapat berubah sesuai update terbaru. Selalu cek halaman Home atau Notifikasi untuk informasi terbaru.
