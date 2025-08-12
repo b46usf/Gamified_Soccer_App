@@ -1,69 +1,42 @@
-# React + TypeScript + Vite
+# Gamified Soccer — Ready for Vercel
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Files from your uploaded project were merged with a minimal Vite + React + TypeScript + Tailwind setup.
 
-Currently, two official plugins are available:
+## What I added
+- package.json (scripts: dev, build, preview)
+- vite.config.ts
+- tsconfig.json
+- index.html
+- src/main.tsx
+- src/App.tsx (placeholder)
+- src/styles/globals.css
+- tailwind.config.cjs
+- postcss.config.cjs
+- vercel.json
+- README
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Important: I did **not** overwrite any existing files in your upload. If your project already had `src/` assets and components, they are preserved.
 
-## Expanding the ESLint configuration
+## How to run locally
+```bash
+# install deps
+npm install
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# dev server
+npm run dev
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# build
+npm run build
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# preview
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Deploy to Vercel
+1. Push this project to GitHub.
+2. Create a new project in Vercel, connect the repo.
+3. Vercel should auto-detect Vite. If not, set:
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+4. Set any environment variables needed.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```

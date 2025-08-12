@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { Trophy, Target, Zap, Star } from "lucide-react";
+import { Trophy, Target, Zap, Star, ArrowLeft } from "lucide-react";
 
 interface GameMode {
   id: string;
@@ -13,7 +13,7 @@ interface GameMode {
   color: string;
 }
 
-export function HomePage({ onSelectMode }: { onSelectMode: (mode: string) => void }) {
+export function HomePage({ onSelectMode, onBackToLanding }: { onSelectMode: (mode: string) => void; onBackToLanding: () => void }) {
   const gameModes: GameMode[] = [
     {
       id: "accuracy",
@@ -56,6 +56,13 @@ export function HomePage({ onSelectMode }: { onSelectMode: (mode: string) => voi
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 p-6">
       <div className="max-w-6xl mx-auto">
+        <div className="flex items-center gap-4 mb-6">
+          <Button onClick={onBackToLanding} variant="secondary" size="sm">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Kembali
+          </Button>
+        </div>
+        
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-white mb-4">⚽ Tendangan Juara</h1>
           <p className="text-xl text-white/90">Master Teknik Tendangan Sepak Bola</p>
