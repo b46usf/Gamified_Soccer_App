@@ -1,0 +1,33 @@
+name: CI & Coverage
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout kode
+      - uses: actions/checkout@v3
+
+      # 2. Setup Node.js
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      # 3. Install dependencies
+      - run: npm install
+
+      # 4. Jalankan test + coverage
+      - run: npm run test -- --coverage
+
+      # 5. Upload laporan coverage ke Codecov
+      - uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage/lcov.info
+          fail_ci_if_error: true
