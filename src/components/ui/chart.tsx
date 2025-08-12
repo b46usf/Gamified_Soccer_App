@@ -317,11 +317,12 @@ function getPayloadConfigFromPayload(
     : config[key as keyof typeof config];
 }
 
+export const ChartTooltip = RechartsPrimitive.Tooltip;
+export const ChartLegend = RechartsPrimitive.Legend;
+
 export {
   ChartContainer,
-  RechartsPrimitive.Tooltip as ChartTooltip,
   ChartTooltipContent,
-  RechartsPrimitive.Legend as ChartLegend,
   ChartLegendContent,
   ChartStyle,
 };
