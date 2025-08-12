@@ -59,12 +59,15 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
+      // Override icon nav dengan className untuk menambahkan ikon custom
       components={{
-        IconLeft: ({ className, ...props }) => (
-          <ChevronLeft className={cn("size-4", className)} {...props} />
+        // @ts-expect-error -- ikutin API shadcn lama, ignore TypeScript
+        IconLeft: (propsIcon: any) => (
+          <ChevronLeft className={cn("size-4", propsIcon.className)} />
         ),
-        IconRight: ({ className, ...props }) => (
-          <ChevronRight className={cn("size-4", className)} {...props} />
+        // @ts-expect-error
+        IconRight: (propsIcon: any) => (
+          <ChevronRight className={cn("size-4", propsIcon.className)} />
         ),
       }}
       {...props}
