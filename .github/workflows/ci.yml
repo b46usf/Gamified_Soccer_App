@@ -22,23 +22,21 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Deteksi semua script di package.json
+      # Deteksi semua script di package.json (output selalu lowercase)
       - name: Check scripts in package.json
         id: check-scripts
         run: |
-          TEST_EXISTS=$(node -e "console.log(!!(require('./package.json').scripts?.test))")
-          LINT_EXISTS=$(node -e "console.log(!!(require('./package.json').scripts?.lint))")
-          BUILD_EXISTS=$(node -e "console.log(!!(require('./package.json').scripts?.build))")
+          TEST_EXISTS=$(node -e "console.log(String(!!(require('./package.json').scripts?.test)).toLowerCase())")
+          LINT_EXISTS=$(node -e "console.log(String(!!(require('./package.json').scripts?.lint)).toLowerCase())")
+          BUILD_EXISTS=$(node -e "console.log(String(!!(require('./package.json').scripts?.build)).toLowerCase())")
           echo "has_test=${TEST_EXISTS}" >> $GITHUB_OUTPUT
           echo "has_lint=${LINT_EXISTS}" >> $GITHUB_OUTPUT
           echo "has_build=${BUILD_EXISTS}" >> $GITHUB_OUTPUT
-        continue-on-error: true
 
       # Jalankan test kalau ada
       - name: Run tests with coverage
         if: steps.check-scripts.outputs.has_test == 'true'
         run: npm run test -- --coverage
-        continue-on-error: true
 
       # Upload coverage kalau ada test
       - name: Upload coverage to Codecov
@@ -46,19 +44,16 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-        continue-on-error: true
 
       # Jalankan lint kalau ada
       - name: Run lint
         if: steps.check-scripts.outputs.has_lint == 'true'
         run: npm run lint
-        continue-on-error: true
 
       # Jalankan build kalau ada
       - name: Build project
         if: steps.check-scripts.outputs.has_build == 'true'
         run: npm run build
-        continue-on-error: true
 
       # Kalau nggak ada test, lint, dan build
       - name: No scripts found
