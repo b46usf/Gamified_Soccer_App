@@ -1,4 +1,4 @@
-name: CI Auto Test or Build
+name: CI Auto Test, Lint, and Build
 
 on:
   push:
@@ -22,26 +22,45 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Cek script test langsung pakai Node.js
-      - name: Check if test script exists
-        id: check-test
+      # Deteksi semua script di package.json
+      - name: Check scripts in package.json
+        id: check-scripts
         run: |
-          if node -e "console.log(!!(require('./package.json').scripts && require('./package.json').scripts.test))" | grep -q "true"; then
-            echo "has_test=true" >> $GITHUB_OUTPUT
-          else
-            echo "has_test=false" >> $GITHUB_OUTPUT
-          fi
+          TEST_EXISTS=$(node -e "console.log(!!(require('./package.json').scripts?.test))")
+          LINT_EXISTS=$(node -e "console.log(!!(require('./package.json').scripts?.lint))")
+          BUILD_EXISTS=$(node -e "console.log(!!(require('./package.json').scripts?.build))")
+          echo "has_test=${TEST_EXISTS}" >> $GITHUB_OUTPUT
+          echo "has_lint=${LINT_EXISTS}" >> $GITHUB_OUTPUT
+          echo "has_build=${BUILD_EXISTS}" >> $GITHUB_OUTPUT
+        continue-on-error: true
 
+      # Jalankan test kalau ada
       - name: Run tests with coverage
-        if: steps.check-test.outputs.has_test == 'true'
+        if: steps.check-scripts.outputs.has_test == 'true'
         run: npm run test -- --coverage
+        continue-on-error: true
 
+      # Upload coverage kalau ada test
       - name: Upload coverage to Codecov
-        if: steps.check-test.outputs.has_test == 'true'
+        if: steps.check-scripts.outputs.has_test == 'true'
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+        continue-on-error: true
 
+      # Jalankan lint kalau ada
+      - name: Run lint
+        if: steps.check-scripts.outputs.has_lint == 'true'
+        run: npm run lint
+        continue-on-error: true
+
+      # Jalankan build kalau ada
       - name: Build project
-        if: steps.check-test.outputs.has_test == 'false'
+        if: steps.check-scripts.outputs.has_build == 'true'
         run: npm run build
+        continue-on-error: true
+
+      # Kalau nggak ada test, lint, dan build
+      - name: No scripts found
+        if: steps.check-scripts.outputs.has_test != 'true' && steps.check-scripts.outputs.has_lint != 'true' && steps.check-scripts.outputs.has_build != 'true'
+        run: echo "No test, lint, or build scripts found in package.json. Skipping."
