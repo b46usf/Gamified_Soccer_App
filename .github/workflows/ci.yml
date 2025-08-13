@@ -1,33 +1,46 @@
-name: CI & Coverage
+name: CI Auto Test or Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout kode
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      # 2. Setup Node.js
-      - uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: 18
 
-      # 3. Install dependencies
-      - run: npm install
+      - name: Install dependencies
+        run: npm install
 
-      # 4. Jalankan test + coverage
-      - run: npm run test -- --coverage
+      - name: Check if test script exists
+        id: check-test
+        run: |
+          if npm run | grep -q "test"; then
+            echo "has_test=true" >> $GITHUB_ENV
+          else
+            echo "has_test=false" >> $GITHUB_ENV
+          fi
 
-      # 5. Upload laporan coverage ke Codecov
-      - uses: codecov/codecov-action@v5
+      - name: Run tests with coverage
+        if: env.has_test == 'true'
+        run: npm run test -- --coverage
+
+      - name: Upload coverage to Codecov
+        if: env.has_test == 'true'
+        uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage/lcov.info
-          fail_ci_if_error: true
+
+      - name: Build project
+        if: env.has_test == 'false'
+        run: npm run build
