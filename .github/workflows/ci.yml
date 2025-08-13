@@ -1,0 +1,61 @@
+name: CI Auto Test, Lint, and Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      # Deteksi semua script di package.json (output selalu lowercase)
+      - name: Check scripts in package.json
+        id: check-scripts
+        run: |
+          TEST_EXISTS=$(node -e "console.log(String(!!(require('./package.json').scripts?.test)).toLowerCase())")
+          LINT_EXISTS=$(node -e "console.log(String(!!(require('./package.json').scripts?.lint)).toLowerCase())")
+          BUILD_EXISTS=$(node -e "console.log(String(!!(require('./package.json').scripts?.build)).toLowerCase())")
+          echo "has_test=${TEST_EXISTS}" >> $GITHUB_OUTPUT
+          echo "has_lint=${LINT_EXISTS}" >> $GITHUB_OUTPUT
+          echo "has_build=${BUILD_EXISTS}" >> $GITHUB_OUTPUT
+
+      # Jalankan test kalau ada
+      - name: Run tests with coverage
+        if: steps.check-scripts.outputs.has_test == 'true'
+        run: npm run test -- --coverage
+
+      # Upload coverage kalau ada test
+      - name: Upload coverage to Codecov
+        if: steps.check-scripts.outputs.has_test == 'true'
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      # Jalankan lint kalau ada
+      - name: Run lint
+        if: steps.check-scripts.outputs.has_lint == 'true'
+        run: npm run lint
+
+      # Jalankan build kalau ada
+      - name: Build project
+        if: steps.check-scripts.outputs.has_build == 'true'
+        run: npm run build
+
+      # Kalau nggak ada test, lint, dan build
+      - name: No scripts found
+        if: steps.check-scripts.outputs.has_test != 'true' && steps.check-scripts.outputs.has_lint != 'true' && steps.check-scripts.outputs.has_build != 'true'
+        run: echo "No test, lint, or build scripts found in package.json. Skipping."

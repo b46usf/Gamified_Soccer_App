@@ -1,5 +1,5 @@
 # ⚽ Gamified Soccer App
-
+![CI Status](https://github.com/b46usf/Gamified_Soccer_App/actions/workflows/ci.yml/badge.svg)
 [![Vercel Status](https://img.shields.io/github/deployments/b46usf/Gamified_Soccer_App/production?label=vercel&logo=vercel)](https://gamified-soccer-app.vercel.app/)
 [![Coverage Status](https://img.shields.io/codecov/c/github/b46usf/Gamified_Soccer_App?logo=codecov)](https://app.codecov.io/gh/b46usf/Gamified_Soccer_App)
 [![License](https://img.shields.io/github/license/b46usf/Gamified_Soccer_App)](LICENSE)
