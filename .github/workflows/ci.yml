@@ -41,9 +41,10 @@ jobs:
       # Upload coverage kalau ada test
       - name: Upload coverage to Codecov
         if: steps.check-scripts.outputs.has_test == 'true'
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          slug: b46usf/Gamified_Soccer_App
 
       # Jalankan lint kalau ada
       - name: Run lint
