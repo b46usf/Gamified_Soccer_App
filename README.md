@@ -5,7 +5,6 @@
 [![Node Version](https://img.shields.io/badge/node-%3E%3D18-green?logo=node.js)](https://nodejs.org/)
 [![Last Commit](https://img.shields.io/github/last-commit/b46usf/Gamified_Soccer_App)](https://github.com/b46usf/Gamified_Soccer_App/commits/main)
 [![Issues](https://img.shields.io/github/issues/b46usf/Gamified_Soccer_App)](https://github.com/b46usf/Gamified_Soccer_App/issues)
-[![Pull Requests](https://img.shields.io/github/issues-pr/b46usf/Gamified_Soccer_App)](https://github.com/b46usf/Gamified_Soccer_App/pulls)
 [![Stars](https://img.shields.io/github/stars/b46usf/Gamified_Soccer_App)](https://github.com/b46usf/Gamified_Soccer_App/stargazers)
 
 ---
