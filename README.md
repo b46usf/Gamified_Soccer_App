@@ -2,7 +2,6 @@
 ![CI Status](https://github.com/b46usf/Gamified_Soccer_App/actions/workflows/ci.yml/badge.svg)
 [![Vercel Status](https://img.shields.io/github/deployments/b46usf/Gamified_Soccer_App/production?label=vercel&logo=vercel)](https://gamified-soccer-app.vercel.app/)
 [![Coverage Status](https://img.shields.io/codecov/c/github/b46usf/Gamified_Soccer_App?logo=codecov)](https://app.codecov.io/gh/b46usf/Gamified_Soccer_App)
-[![License](https://img.shields.io/github/license/b46usf/Gamified_Soccer_App)](LICENSE)
 [![Node Version](https://img.shields.io/badge/node-%3E%3D18-green?logo=node.js)](https://nodejs.org/)
 [![Last Commit](https://img.shields.io/github/last-commit/b46usf/Gamified_Soccer_App)](https://github.com/b46usf/Gamified_Soccer_App/commits/main)
 [![Issues](https://img.shields.io/github/issues/b46usf/Gamified_Soccer_App)](https://github.com/b46usf/Gamified_Soccer_App/issues)
