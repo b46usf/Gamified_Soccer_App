@@ -22,29 +22,26 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Cek apakah ada script "test" di package.json
+      # Cek script test langsung pakai Node.js
       - name: Check if test script exists
         id: check-test
         run: |
-          if npm run | grep -q "test"; then
+          if node -e "console.log(!!(require('./package.json').scripts && require('./package.json').scripts.test))" | grep -q "true"; then
             echo "has_test=true" >> $GITHUB_OUTPUT
           else
             echo "has_test=false" >> $GITHUB_OUTPUT
           fi
 
-      # Jalankan test + coverage kalau ada test script
       - name: Run tests with coverage
         if: steps.check-test.outputs.has_test == 'true'
         run: npm run test -- --coverage
 
-      # Upload ke Codecov kalau ada test script
       - name: Upload coverage to Codecov
         if: steps.check-test.outputs.has_test == 'true'
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
-      # Build project kalau nggak ada test script
       - name: Build project
         if: steps.check-test.outputs.has_test == 'false'
         run: npm run build
